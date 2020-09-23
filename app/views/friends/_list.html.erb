@@ -1,0 +1,23 @@
+<table class="ui celled table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @friends.each do |friend| %>
+            <tr>
+                <td class="email-table"><%= friend.email %></td>
+                <td><%= friend.first_name %></td>
+                <td><%= friend.last_name %></td>
+                <td>
+                    <%= link_to 'Profile', user_path(friend), class: 'ui blue button' %>
+                    <%= link_to 'Unfollow', friendship_path(friend), method: :delete, class: 'ui red button' %>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>

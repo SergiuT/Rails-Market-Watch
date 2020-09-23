@@ -1,0 +1,29 @@
+<%= render 'layouts/messages' %>
+<% if @stock %>
+    <ul class="custom-body">
+        <li><%= @stock.ticker %></li>
+        <li><%= @stock.name %></li>
+        <li><%= @stock.last_price %></li>
+        <li class="<%= 'custom-green' if @stock.change_percent[0] == '+' %> red">
+            <%= @stock.change_percent %>
+        </li>
+        <% if current_user.can_track_stock(@stock.ticker) %>
+            <li>
+                <%= link_to 'Add Stock to Portfolio', 
+                    user_stocks_path(user: current_user, ticker: @stock.ticker), 
+                    class: 'ui blue button', method: :post 
+                %>
+            </li>
+        <% else %>
+            <span class="ui blue label">
+                You are already tracking
+                <% if !current_user.under_stock_limit %>
+                    10 stocks
+                <% end %>
+                <% if current_user.stock_already_tracked(@stock.ticker) %>
+                    this stock
+                <% end %>
+            </span>
+        <% end %>
+    </ul>
+<% end %>

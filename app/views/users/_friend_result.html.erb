@@ -1,0 +1,21 @@
+<%= render 'layouts/messages' %>
+<% if @friends %>
+    <% @friends.each do |friend| %>
+        <ul class="custom-body-friend">
+            <li><%= friend.full_name %></li>
+            <li><%= friend.email %></li>
+            <li>
+                <%= link_to 'Profile', user_path(friend),
+                    class: "ui blue button" %>
+                <% if current_user.not_friends(friend.id) %>
+                    <%= link_to 'Follow', friendships_path(friend: friend),
+                        class: "ui green button", method: :post %>
+                <% else %>
+                    <button class="ui yellow button disabled">
+                        Already friends
+                    </button>
+                <% end %>
+            </li>
+        </ul>
+    <% end %>
+<% end %>

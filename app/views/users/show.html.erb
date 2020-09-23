@@ -1,0 +1,91 @@
+<div class="ui large inverted menu custom-nav custom-nav-home">
+    <div id="custom-navbar-title" class="item custom-title">
+        <i class="user secret icon"></i>
+        <%= link_to 'Home', root_path%>
+    </div>
+    <% if current_user %>
+        <%= link_to 'Portfolio', my_portfolio_path, class: 'item' %>
+        <%= link_to 'Friends', my_friends_path, class: 'item' %>
+    <% end %>
+    <div class="right menu">
+        <% if current_user %>
+            <div class="ui pointing dropdown link item">
+                Profile <i class="dropdown icon"></i>
+                <div class="menu">
+                    <%= link_to 'Edit Profile', edit_user_registration_path, class: 'item' %>
+                    <%= link_to 'View Profile', edit_user_registration_path, class: 'item' %>
+                </div>
+            </div>
+            <div class="item">
+                <i class="user icon"></i>
+                <%= current_user.full_name %>
+            </div>
+        <% end %>
+        <% if !current_user %>
+            <%= link_to 'Login', new_user_session_path, class: 'item' %>
+            <div class="item">
+                <%= link_to 'Sign Up', new_user_registration_path, class: "ui blue button" %>
+            </div>
+        <% end %>
+    </div>
+</div>
+<div class="ui grid">
+    <div class="sixteen wide computer column custom-grid-profile">
+        <div class="sixteen wide computer custom-profile-box">
+            <div class="ui container">
+                <h2 class="ui header">
+                    <%= @user.first_name %>'s Profile
+                </h2>
+                <div class="ui divider"></div>
+                <div class="info">
+                    <p>Email</p>
+                    <%= @user.email %>
+                </div>
+                <div class="info">
+                    <p>Name</p>
+                    <%= @user.full_name %>
+                </div>
+                <h3 class="ui header">
+                    Tracked Stocks
+                </h3>
+                <div class="ui divider"></div>
+                <div class="custom-stock-list">
+                    <% if !@tracked_stocks.empty? %>
+                        <div class="user-stocks">
+                            <% @user_stocks.each do |stock| %>
+                                <ul class="custom-body-profile">
+                                    <li><%= stock.ticker %></li>
+                                    <li><%= stock.name %></li>
+                                    <li><%= stock.last_price %></li>
+                                    <li class="<%= 'custom-green' if stock.change_percent && stock.change_percent[0] == '+' %> red">
+                                        <%= stock.change_percent %>
+                                    </li>
+                                    <% if current_user.can_track_stock(stock.ticker) %>
+                                        <li>
+                                            <%= link_to 'Add Stock to Portfolio', 
+                                                user_stocks_path(user: current_user, ticker: stock.ticker), 
+                                                class: 'ui green button', method: :post 
+                                            %>
+                                        </li>
+                                    <% else %>
+                                        <span class="ui orange label">
+                                            You are already tracking
+                                            <% if !current_user.under_stock_limit %>
+                                                10 stocks
+                                            <% end %>
+                                            <% if current_user.stock_already_tracked(stock.ticker) %>
+                                                this stock
+                                            <% end %>
+                                        </span>
+                                    <% end %>
+                                </ul>
+                            <% end %>
+                        </div>
+                    <% else %>
+                        <p class='lead'>This user is not tracking any stocks</p>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

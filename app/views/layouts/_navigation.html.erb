@@ -1,0 +1,21 @@
+<div class="ui large inverted menu custom-nav">
+    <div class="item custom-title">
+        <i class="money bill alternate outline icon"></i>
+        <%= link_to 'Home', root_path%>
+    </div>
+    <%= link_to 'Profile', root_path, class: 'item' %>
+    <div class="right menu">
+        <div class="ui pointing dropdown link item">
+            Language <i class="dropdown icon"></i>
+            <div class="menu">
+                <a class="item">English</a>
+                <a class="item">Russian</a>
+                <a class="item">Spanish</a>
+            </div>
+        </div>
+        <%= link_to 'Login', new_user_session_path, class: 'item' %>
+        <div class="item">
+            <%= link_to 'Sign Up', new_user_registration_path, class: "ui blue button" %>
+        </div>
+    </div>
+</div>

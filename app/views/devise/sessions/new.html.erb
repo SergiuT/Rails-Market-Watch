@@ -1,0 +1,52 @@
+<div class="ui large inverted menu custom-nav-home">
+    <div id="custom-navbar-title" class="item custom-title">
+        <i class="money bill alternate outline icon"></i>
+        <%= link_to 'Home', root_path%>
+    </div>
+    <div class="right menu">
+        <%= link_to 'Login', new_user_session_path, class: 'item' %>
+        <div class="item">
+            <%= link_to 'Sign Up', new_user_registration_path, class: "ui blue button" %>
+        </div>
+    </div>
+</div>
+<h4 class="ui center aligned medium icon header">
+  <i class="circular inverted blue power off tiny icon"></i>
+  Sign in 
+</h4>
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <div class="ui center aligned grid">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="field">
+          <%= f.label :email %><br />
+          <div class="ui left icon input">
+            <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+            <i class="user icon"></i>
+          </div>
+        </div>
+
+        <div class="field">
+          <%= f.label :password %>
+          <div class="ui input">
+            <%= f.password_field :password, autocomplete: "new-password" %>
+          </div>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="field custom-remember">
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </div>
+        <% end %>
+
+        <div class="actions">
+          <%= f.submit "Sign in", class: "ui blue submit button" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="links_container">
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+</div>

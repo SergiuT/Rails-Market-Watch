@@ -1,0 +1,18 @@
+<div class="user-stocks">
+    <% @user_stocks.each do |stock| %>
+        <ul class="custom-body">
+            <li><%= stock.ticker %></li>
+            <li><%= stock.name %></li>
+            <li><%= stock.last_price %></li>
+            <li class="<%= 'custom-green' if stock.change_percent && stock.change_percent[0] == '+' %> red">
+                <%= stock.change_percent %>
+            </li>
+            <li>
+                <%= link_to 'Remove', user_stock_path(stock), 
+                    method: :delete,
+                    class: 'ui red button' 
+                %>
+            </li>
+        </ul>
+    <% end %>
+</div>
